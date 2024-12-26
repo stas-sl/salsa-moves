@@ -192,7 +192,7 @@ reloadAll()
             {{ menuMove }}
           </v-card-title>
           <div style="width: 50dvw; aspect-ratio: 1;">
-            <video-player :src="`${config.public.mediaUrl}${menuMove}.webm`" loop controls autoplay="muted" responsive
+            <video-player :src="`${config.public.mediaUrl}${menuMove}.mp4`" loop controls autoplay="muted" responsive
               :playbackRate="1" :enableSmoothSeeking="true" fill playsinline
               @ready="$event.target.player.userActive(false)" />
           </div>
