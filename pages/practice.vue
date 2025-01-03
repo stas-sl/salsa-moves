@@ -162,15 +162,3 @@ const player = useTemplateRef('player')
     </v-main>
   </v-app>
 </template>
-
-<style>
-.video-card-item .v-card-item__content {
-  align-self: stretch;
-  display: flex;
-  flex-direction: column;
-}
-
-.video-js {
-  background-color: unset;
-}
-</style>

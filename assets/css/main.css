@@ -1,0 +1,14 @@
+.video-card-item .v-card-item__content {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+}
+
+.video-js {
+  background-color: unset;
+}
+
+.vjs-loading-spinner,
+.vjs-big-play-button {
+  display: none !important;
+}

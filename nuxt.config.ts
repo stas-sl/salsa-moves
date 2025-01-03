@@ -19,6 +19,7 @@ export default defineNuxtConfig({
       title: "Salsa Moves"
     }
   },
+  css: ['~/assets/css/main.css'],
   vuetify: {
     moduleOptions: {},
     vuetifyOptions: {

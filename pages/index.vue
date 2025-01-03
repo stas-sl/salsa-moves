@@ -4,9 +4,9 @@ import { VChip } from "vuetify/components"
 
 const filesToDisplay = ref([])
 const videoCount = ref(20)
-const isMenuOpen = ref(false)
-const menuActivator = ref(null)
-const menuMove = ref('')
+const isDialogOpen = ref(false)
+const dialogActivator = ref(null)
+const dialogMove = ref('')
 const config = useRuntimeConfig()
 
 const { uid, moves, movesState, movesCounts,
@@ -57,11 +57,11 @@ function renderMoveRefs(s) {
   return h(Fragment, null, splitByMoves(s).map((x) => {
     if (x.isMatch) {
       return h(VChip, {
-        size: 'default', variant: 'flat', link: true, class: 'mx-1 mt-n1', density: 'compact',
+        size: 'default', variant: 'flat', link: true, class: 'mx-1 mb-1', density: 'compact',
         onClick: (e) => {
-          menuActivator.value = e.target
-          isMenuOpen.value = true
-          menuMove.value = x.text
+          dialogActivator.value = e.target
+          isDialogOpen.value = true
+          dialogMove.value = x.text
         }
       },
         () => x.text)
@@ -99,7 +99,7 @@ reloadAll()
           Review: {{ movesCounts.review }}
         </p>
         <v-row>
-          <v-col cols="4">
+          <v-col class="v-col-auto">
             <v-card variant="outlined">
               <v-card-title>
                 Practice
@@ -107,7 +107,7 @@ reloadAll()
               <v-card-item>
                 <div class="d-flex align-center">
                   State:
-                  <v-chip-group variant="flat" class="ml-2" multiple mandatory
+                  <v-chip-group variant="flat" class="ml-2" multiple mandatory column
                     v-model="userSettings.practiceOptions.states"
                     @update:modelValue="updateMoveState([{ key: `settings`, value: userSettings }])">
                     <!-- @update:modelValue="updateMoveState([{ key: `settings`, value: _merge(userSettings, { practiceOptions: { states: $event } }) }]); console.log(userSettings)"> -->
@@ -147,7 +147,9 @@ reloadAll()
                   <p v-if="file.description?.text" v-html="file.description?.text"></p>
                   <p v-if="file.description?.related">
                     <span class="text-subtitle-1">Related:</span>
-                    <component :is="renderMoveRefs(file.description?.related)" />
+                    <span class="ml-1">
+                      <component :is="renderMoveRefs(file.description?.related)" />
+                    </span>
                   </p>
                 </my-lazy>
               </v-card-text>
@@ -186,18 +188,23 @@ reloadAll()
           </v-col>
         </v-row>
       </v-container>
-      <v-menu v-model="isMenuOpen" location="center" :activator="menuActivator" :scrim="true">
-        <v-card variant="flat" class="pa-0 ma-0">
+      <v-dialog v-model="isDialogOpen" :activator="dialogActivator" height="100%">
+        <v-card variant="flat" class="pa-0 ma-0 fill-height d-flex flex-column w-100">
           <v-card-title class="text-h5 text-center">
-            {{ menuMove }}
+            {{ dialogMove }}
           </v-card-title>
-          <div style="width: 50dvw; aspect-ratio: 1;">
-            <video-player :src="`${config.public.mediaUrl}${menuMove}.mp4`" loop controls autoplay="muted" responsive
+          <v-card-item class="pa-0 flex-grow-1 video-card-item">
+            <!-- <div style="width: 100%; height: 100%;"> -->
+            <video-player :src="`${config.public.mediaUrl}${dialogMove}.mp4`" loop controls autoplay="muted" responsive
               :playbackRate="1" :enableSmoothSeeking="true" fill playsinline
               @ready="$event.target.player.userActive(false)" />
-          </div>
+            <!-- </div> -->
+          </v-card-item>
+          <v-card-actions class="justify-center">
+            <v-btn color="primary" variant="flat" @click="isDialogOpen = false">Close</v-btn>
+          </v-card-actions>
         </v-card>
-      </v-menu>
+      </v-dialog>
     </v-main>
   </v-app>
 </template>
@@ -205,12 +212,5 @@ reloadAll()
 <style scoped>
 .video-card {
   aspect-ratio: 1;
-}
-</style>
-
-<style>
-.vjs-loading-spinner,
-.vjs-big-play-button {
-  display: none !important;
 }
 </style>
