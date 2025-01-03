@@ -5,7 +5,7 @@
 }
 
 .video-js {
-  background-color: unset;
+  background-color: unset !important;
 }
 
 .vjs-loading-spinner,
