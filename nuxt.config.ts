@@ -8,7 +8,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       // mediaUrl: "https://salsa-moves.curious.by/media/moves/",
-      mediaUrl: "https://media.githubusercontent.com/media/stas-sl/salsa-moves/refs/heads/main/media/moves/",
+      // mediaUrl: "https://media.githubusercontent.com/media/stas-sl/salsa-moves/refs/heads/main/media/moves/",
+      mediaUrl: "https://raw.githubusercontent.com/stas-sl/salsa-moves/refs/heads/main/media/moves/",
       // mediaUrl: "/media/moves/",
       storeUrl: "https://salsa-moves.curious.by/"
     }
