@@ -80,7 +80,7 @@ reloadAll()
     <v-main>
       <v-container fluid>
 
-        <h1>Salsa moves</h1>
+        <h1>Salsa moves1</h1>
 
         <!-- <v-btn variant="elevated" @click="reloadVideos">Load some random videos</v-btn>
 
