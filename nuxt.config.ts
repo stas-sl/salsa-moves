@@ -15,7 +15,7 @@ export default defineNuxtConfig({
     }
   },
   app: {
-    buildAssetsDir: "/nuxt/",
+    // buildAssetsDir: "/nuxt/",
     head: {
       title: "Salsa Moves"
     }

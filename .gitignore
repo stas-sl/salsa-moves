@@ -1,11 +1,11 @@
 # Nuxt dev/build outputs
-# .output
+.output
 .data
 .nuxt
 .nitro
 .cache
 dist
-.output/public/media
+# .output/public/media
 notebooks
 
 # Node dependencies
