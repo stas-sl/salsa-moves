@@ -34,19 +34,21 @@ jobs:
         with:
           node-version: "22"
           cache: npm
-      - name: Restore cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            dist
-            .nuxt
-          key: ${{ runner.os }}-nuxt-build-${{ hashFiles('dist') }}
-          restore-keys: |
-            ${{ runner.os }}-nuxt-build-
+          cache-dependency-path: package-lock.json
+      # - name: Restore cache
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: |
+      #       dist
+      #       .nuxt
+      #     key: ${{ runner.os }}-nuxt-build-${{ hashFiles('dist') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-nuxt-build-
       - name: Install dependencies
         run: npm ci
       - name: Static HTML export with Nuxt
-        run: npx nuxi generate && rm -rf .output/public/media
+        run: npx nuxi generate
+      - run: rm -rf .output/public/media
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
