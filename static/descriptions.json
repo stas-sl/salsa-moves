@@ -39,10 +39,10 @@
     "related": "s112,s120"
   },
   "s034a": {
-    "related": "s034a,s021b"
+    "related": "s034b,s021b"
   },
   "s034b": {
-    "related": "s034b,s021b"
+    "related": "s034a,s021b"
   },
   "s036": {
     "related": "s195"
