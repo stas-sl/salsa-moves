@@ -1,5 +1,6 @@
 <script setup>
 import { useMagicKeys, whenever, onKeyStroke } from '@vueuse/core'
+import { randomBeta, randomInt } from 'd3-random';
 
 const { uid, moves, movesState, movesCounts,
   userSettings, updateMoveState } = useStore()
@@ -12,7 +13,43 @@ const selectRandomMove = () => {
   player?.value?.$el?.player?.pause()
   const candidateMoves = moves.value.filter(x =>
     userSettings.value.practiceOptions.states.includes(movesState.value[`move-${x.move}`]?.state || 'new'))
-  currentMove.value = candidateMoves[Math.floor(Math.random() * candidateMoves.length)]
+  if (userSettings.value.practiceOptions.method === 'random') {
+    currentMove.value = candidateMoves[randomInt(candidateMoves.length)()]
+  } else if (userSettings.value.practiceOptions.method === 'thompson') {
+    let minP = 1, minMove;
+    for (const m of candidateMoves) {
+      let a = movesState.value[`move-${m.move}`].alpha
+      let b = movesState.value[`move-${m.move}`].beta
+      const t = userSettings.value.practiceOptions.thompsonTemperature
+      a = (1 - t) + t * a
+      b = (1 - t) + t * b
+      const p = randomBeta(a, b)()
+      if (p < minP) {
+        minP = p
+        minMove = m
+      }
+    }
+    currentMove.value = minMove
+  }
+}
+
+const decay = 0.95
+const processAnswer = async (result) => {
+  const key = `move-${currentMove.value?.move}`
+  const prev = movesState.value[key]
+  await updateMoveState([
+    {
+      key: key, value: {
+        lastSeen: new Date().toISOString(),
+        seenCount: prev.seenCount + 1,
+        hardCount: prev.hardCount + (result === 'hard' ? 1 : 0),
+        goodCount: prev.goodCount + (result === 'good' ? 1 : 0),
+        alpha: decay * prev.alpha + (result === 'good' ? 1 : 0),
+        beta: decay * prev.beta + (result === 'hard' ? 1 : 0),
+      }
+    }
+  ])
+  selectRandomMove()
 }
 
 let isSeeking = false;
@@ -37,7 +74,7 @@ function waitForSeeked() {
 
 whenever(space, () => {
   if (answerVisible.value) {
-    selectRandomMove()
+    processAnswer('good')
   } else {
     answerVisible.value = true
     player?.value?.$el?.player?.play()
@@ -56,17 +93,12 @@ whenever(keyP, () => {
 
 whenever(digit1, () => {
   if (answerVisible.value) {
-    updateMoveState([{ key: `move-${currentMove.value?.move}`, value: { state: 'new' } }])
+    processAnswer('hard')
   }
 })
 whenever(digit2, () => {
   if (answerVisible.value) {
-    updateMoveState([{ key: `move-${currentMove.value?.move}`, value: { state: 'learning' } }])
-  }
-})
-whenever(digit3, () => {
-  if (answerVisible.value) {
-    updateMoveState([{ key: `move-${currentMove.value?.move}`, value: { state: 'review' } }])
+    processAnswer('good')
   }
 })
 
@@ -125,6 +157,17 @@ const player = useTemplateRef('player')
               v-show="answerVisible" />
           </v-card-item>
           <v-card-actions class="justify-center pa-0">
+            <span v-if="answerVisible">
+              <v-icon color="white" icon="mdi-eye" size="small" class="mr-1"></v-icon>{{
+                movesState[`move-${currentMove?.move}`]?.seenCount }}
+              <v-icon color="white" icon="mdi-thumb-up" size="small" class="mr-1 ml-2"></v-icon>{{
+                movesState[`move-${currentMove?.move}`]?.goodCount }}
+              <v-icon color="white" icon="mdi-thumb-down" size="small" class="mr-1 ml-2"></v-icon>{{
+                movesState[`move-${currentMove?.move}`]?.hardCount }}
+              <span class="mr-1 ml-2 text-h6">μ</span>{{
+                (movesState[`move-${currentMove?.move}`]?.alpha / (movesState[`move-${currentMove?.move}`]?.alpha +
+                  movesState[`move-${currentMove?.move}`]?.beta)).toFixed(2) }}
+            </span>
             <v-btn @click="answerVisible = true; player?.$el?.player?.play()" color="primary" class="my-2"
               v-if="!answerVisible" variant="flat">Show
               answer<span v-if="$device.isDesktop">&nbsp;(space)</span></v-btn>
@@ -154,8 +197,10 @@ const player = useTemplateRef('player')
 
             </v-menu>
 
-            <v-btn @click="selectRandomMove()" color="primary" class="my-2" v-if="answerVisible"
-              variant="flat">Next<span v-if="$device.isDesktop">&nbsp;(space)</span></v-btn>
+            <v-btn @click="processAnswer('hard')" color="error" class="my-2" prepend-icon="mdi-thumb-down"
+              v-if="answerVisible" variant="flat">Hard<span v-if="$device.isDesktop">&nbsp;(1)</span></v-btn>
+            <v-btn @click="processAnswer('good')" color="success" class="my-2" prepend-icon="mdi-thumb-up"
+              v-if="answerVisible" variant="flat">Good<span v-if="$device.isDesktop">&nbsp;(2)</span></v-btn>
           </v-card-actions>
         </v-card>
       </v-container>

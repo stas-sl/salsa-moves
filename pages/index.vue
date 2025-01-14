@@ -104,7 +104,7 @@ reloadAll()
               <v-card-title>
                 Practice
               </v-card-title>
-              <v-card-item>
+              <v-card-item class="pa-4">
                 <div class="d-flex align-center">
                   State:
                   <v-chip-group variant="flat" class="ml-2" multiple mandatory column
@@ -121,6 +121,18 @@ reloadAll()
                       review({{ movesCounts.review }})
                     </v-chip>
                   </v-chip-group>
+                </div>
+                <v-radio-group inline v-model="userSettings.practiceOptions.method"
+                  @update:modelValue="updateMoveState([{ key: `settings`, value: userSettings }])" label="Method"
+                  color="white">
+                  <v-radio label="Random" value="random"></v-radio>
+                  <v-radio label="Thompson Sampling" value="thompson"></v-radio>
+                </v-radio-group>
+                <div class="text-caption">Thompson Sampling Temperature</div>
+                <div class="d-flex">
+                  <v-slider v-model="userSettings.practiceOptions.thompsonTemperature"
+                    @update:modelValue="updateMoveState([{ key: `settings`, value: userSettings }])" min="0" max="1"
+                    step="0.01"></v-slider><span style="width: 35pt;" class="text-center">{{ userSettings.practiceOptions.thompsonTemperature.toFixed(2) }}</span>
                 </div>
               </v-card-item>
               <v-card-actions class="justify-center">

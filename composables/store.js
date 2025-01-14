@@ -24,7 +24,7 @@ export const useStore = () => {
   const userSettings = computed(
     () => movesState.value.settings
   )
-  
+
   const loadMoves = async () => {
     moves.value = files.map((f) => ({
       ...f,
@@ -36,13 +36,30 @@ export const useStore = () => {
   const loadMovesState = async () => {
     let { data } = await $fetch(`${config.public.storeUrl}load?uid=${uid.value}`)
     movesState.value = _fromPairs(data.map(({ key, value }) => [key, JSON.parse(value)]))
-    if (!Array.isArray(movesState.value?.settings?.practiceOptions?.states)) {
-      _set(movesState.value, 'settings.practiceOptions.states', ['learning', 'review'])
+    if (!movesState.value?.settings?.practiceOptions) {
+      _set(movesState.value, 'settings.practiceOptions',
+        {
+          'states': ['learning', 'review'],
+          'method': 'thompson',
+          'thompsonTemperature': 0.2
+        })
+    }
+    const defaults = {
+      'state': 'new',
+      'seenCount': 0,
+      'goodCount': 0,
+      'hardCount': 0,
+      'alpha': 1, // good
+      'beta': 10  // hard
+    }
+    for (const m of moves.value) {
+      const key = `move-${m.move}`
+      movesState.value[key] = _defaults((movesState.value[key] || {}), defaults)
     }
   }
 
   const updateMoveState = async (moves) => {
-    moves = moves.map((x) => ({ uid: uid.value, key: x.key, value: x.value }))
+    moves = moves.map((x) => ({ uid: uid.value, key: x.key, value: _merge(movesState.value[x.key] || {}, x.value) }))
     const res = await $fetch(`${config.public.storeUrl}save`,
       { method: 'POST', body: moves })
     for (const m of moves) {
