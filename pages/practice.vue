@@ -160,10 +160,12 @@ const player = useTemplateRef('player')
             <span v-if="answerVisible">
               <v-icon color="white" icon="mdi-eye" size="small" class="mr-1"></v-icon>{{
                 movesState[`move-${currentMove?.move}`]?.seenCount }}
+              <span class="d-none d-sm-inline-block">
               <v-icon color="white" icon="mdi-thumb-up" size="small" class="mr-1 ml-2"></v-icon>{{
                 movesState[`move-${currentMove?.move}`]?.goodCount }}
               <v-icon color="white" icon="mdi-thumb-down" size="small" class="mr-1 ml-2"></v-icon>{{
                 movesState[`move-${currentMove?.move}`]?.hardCount }}
+              </span>
               <span class="mr-1 ml-2 text-h6">μ</span>{{
                 (movesState[`move-${currentMove?.move}`]?.alpha / (movesState[`move-${currentMove?.move}`]?.alpha +
                   movesState[`move-${currentMove?.move}`]?.beta)).toFixed(2) }}

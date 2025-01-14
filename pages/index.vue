@@ -80,35 +80,27 @@ reloadAll()
     <v-main>
       <v-container fluid>
 
-        <h1>Salsa moves</h1>
-
-        <!-- <v-btn variant="elevated" @click="reloadVideos">Load some random videos</v-btn>
-
-        <br>
-        <br>
-        <v-text-field label="Num" variant="outlined" type="number" v-model="videoCount"></v-text-field>
-
-        <v-btn variant="elevated" @click="reloadAll">Load all</v-btn>
-        <v-btn variant="elevated" @click="menuActivator = $event.target; isMenuOpen = true;">Show dialog</v-btn>
-        <br>
-        <br> -->
-        <p class="pb-4">
-          Total: {{ movesCounts.total }}<br>
-          New: {{ movesCounts.new }}<br>
-          Learning: {{ movesCounts.learning }}<br>
-          Review: {{ movesCounts.review }}
-        </p>
         <v-row>
-          <v-col class="v-col-auto">
+          <v-col class="v-col-auto mx-auto pb-0">
+            <h1>Salsa moves</h1>
+            <p class="text-center">
+              Total: {{ movesCounts.total }}<br>
+              New: {{ movesCounts.new }}<br>
+              Learning: {{ movesCounts.learning }}<br>
+              Review: {{ movesCounts.review }}
+            </p>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col class="v-col-auto mx-auto">
             <v-card variant="outlined">
               <v-card-title>
                 Practice
               </v-card-title>
-              <v-card-item class="pa-4">
-                <div class="d-flex align-center">
-                  State:
-                  <v-chip-group variant="flat" class="ml-2" multiple mandatory column
-                    v-model="userSettings.practiceOptions.states"
+              <v-card-item>
+                <div class="pb-3">
+                  <label>State</label>
+                  <v-chip-group variant="flat" multiple mandatory column v-model="userSettings.practiceOptions.states"
                     @update:modelValue="updateMoveState([{ key: `settings`, value: userSettings }])">
                     <!-- @update:modelValue="updateMoveState([{ key: `settings`, value: _merge(userSettings, { practiceOptions: { states: $event } }) }]); console.log(userSettings)"> -->
                     <v-chip color="primary" value="new" density="compact" filter>
@@ -122,17 +114,25 @@ reloadAll()
                     </v-chip>
                   </v-chip-group>
                 </div>
-                <v-radio-group inline v-model="userSettings.practiceOptions.method"
-                  @update:modelValue="updateMoveState([{ key: `settings`, value: userSettings }])" label="Method"
-                  color="white">
-                  <v-radio label="Random" value="random"></v-radio>
-                  <v-radio label="Thompson Sampling" value="thompson"></v-radio>
-                </v-radio-group>
-                <div class="text-caption">Thompson Sampling Temperature</div>
-                <div class="d-flex">
-                  <v-slider v-model="userSettings.practiceOptions.thompsonTemperature"
-                    @update:modelValue="updateMoveState([{ key: `settings`, value: userSettings }])" min="0" max="1"
-                    step="0.01"></v-slider><span style="width: 35pt;" class="text-center">{{ userSettings.practiceOptions.thompsonTemperature.toFixed(2) }}</span>
+                <div class="pb-3">
+                  <label>Method</label>
+                  <v-radio-group inline v-model="userSettings.practiceOptions.method"
+                    @update:modelValue="updateMoveState([{ key: `settings`, value: userSettings }])" color="white"
+                    :hide-details="true" density="comfortable">
+                    <v-radio label="Thompson Sampling" value="thompson"></v-radio>
+                    <v-radio label="Random" value="random"></v-radio>
+                  </v-radio-group>
+                </div>
+                <div class="pb-3">
+                  <div v-if="userSettings.practiceOptions.method === 'thompson'">
+                    <label>Thompson Sampling Temperature</label>
+                    <div class="d-flex">
+                      <v-slider v-model="userSettings.practiceOptions.thompsonTemperature"
+                        @end="updateMoveState([{ key: `settings`, value: userSettings }])" min="0" max="1"
+                        step="0.01"></v-slider><span style="width: 35pt;" class="text-center">{{
+                          userSettings.practiceOptions.thompsonTemperature.toFixed(2) }}</span>
+                    </div>
+                  </div>
                 </div>
               </v-card-item>
               <v-card-actions class="justify-center">
