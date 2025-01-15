@@ -186,13 +186,13 @@ const player = useTemplateRef('player')
                 <v-chip-group variant="flat" direction="vertical"
                   @update:modelValue="updateMoveState([{ key: `move-${currentMove?.move}`, value: { state: $event } }])">
                   <v-chip class="bg-primary mx-2" value="new" density="compact">
-                    new (1)
+                    new
                   </v-chip>
                   <v-chip class="bg-deep-purple-lighten-1 mx-2" value="learning" density="compact">
-                    learning (2)
+                    learning
                   </v-chip>
                   <v-chip class="bg-success mx-2" value="review" density="compact">
-                    review (3)
+                    review
                   </v-chip>
                 </v-chip-group>
               </v-card>
