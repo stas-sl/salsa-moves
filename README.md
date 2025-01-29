@@ -4,6 +4,8 @@ https://stas-sl.github.io/salsa-moves
 
 ## Overview
 
+<img width="1221" alt="image" src="https://github.com/user-attachments/assets/83a51ff6-4f11-42ac-96ee-5720a0528184" />
+
 This app was primarily developed for my own use to catalog, remember, and practice salsa moves (linear On2/On1). It was inspired by Anki flashcards, which are primarily used for language learning but can be applied to any subject, from medical exams to music theory.
 
 One challenge with salsa moves is that beyond basic steps like the cross-body lead or left/right turn, most intermediate and advanced moves don’t have standardized names. To address this, I decided to use sequential numbering. While memorizing moves by number isn’t ideal, I believe that, just as we learn the multiplication table, our brains can absorb any information through regular practice.
