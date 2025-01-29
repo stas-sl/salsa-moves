@@ -47,10 +47,11 @@ A practical setting is 0.8, which ensures a balanced mix—favoring harder moves
 When starting a practice session, you can filter moves by state (e.g., "Learning" or "Review").
 
 #### Ways to Practice
-With a partner – The best option, especially when learning new moves.
-Shadow dancing – Practicing your own steps while imagining a partner.
-Visualization – Mentally rehearsing the move, which is useful for reviewing or reinforcing basic moves.
-Personal State Management
+- **With a partner** – The best option, especially when learning new moves.
+- **Shadow dancing** – Practicing your own steps while imagining a partner.
+- **Visualization** – Mentally rehearsing the move, which is useful for reviewing or reinforcing basic moves.
+  
+### Personal State Management
 Currently, the app does not require registration or authentication. Instead, when you first open the app in a browser, a unique user ID is assigned and stored in local storage. Your progress is then tracked on the server using this ID.
 
 If you know how to access and modify local storage via the browser console, you can manually transfer your user ID to another device. While not the most user-friendly approach, it allows for basic state management without requiring an account. In the future, I may implement a more standard authentication system.
