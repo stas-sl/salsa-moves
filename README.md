@@ -58,6 +58,16 @@ Currently, the app does not require registration or authentication. Instead, whe
 
 If you know how to access and modify local storage via the browser console, you can manually transfer your user ID to another device. While not the most user-friendly approach, it allows for basic state management without requiring an account. In the future, I may implement a more standard authentication system.
 
+## Similar projects
+
+There were similar projects I was inspired by.
+
+- https://bachatasteps.com/?topic=salsa&options=newest This site includes a mix of Cuban and linear salsa moves, all identified by numbers. It also allows users to upload their own moves, though I haven’t seen any new additions in the past 2–3 months. Most of the content consists of tutorial videos rather than social dancing clips.
+- https://www.salsaenmovimientos.com
+  This site has a cool feature that classifies each move based on its starting and ending position. There are over 200 positions in total, though most moves fall into one of the 10 most common positions, with a long tail of more exotic positions and handholds. The site contains over 3,000 moves from social dances, but many are not unique—often featuring the same basic moves performed by different dancers. This makes it difficult to determine the exact number of unique moves. Navigating through the moves can also be challenging. You can't view all moves on a single page; instead, you have to click multiple times just to see each move individually.
+
+The main distinction from these sites is practice mode + being open source.
+
 ## Contributing
 The app is currently in its MVP (Minimum Viable Product) stage—meaning it has only the essential features needed to be useful. There is still a lot of room for improvement.
 
