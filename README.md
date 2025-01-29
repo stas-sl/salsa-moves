@@ -27,9 +27,10 @@ The main page displays a list of all moves, allowing you to scroll through them 
 
 Each move can be assigned one of three states:
 
-New – The default state when a move is first added.
-Learning – Assigned when you decide to actively practice a move.
-Review – For moves you have already learned and want to reinforce.
+- New – The default state when a move is first added.
+- Learning – Assigned when you decide to actively practice a move.
+- Review – For moves you have already learned and want to reinforce.
+
 You can manually change a move's state as you progress.
 
 ### Practice Mode
@@ -58,8 +59,6 @@ If you know how to access and modify local storage via the browser console, you 
 
 ## Contributing
 The app is currently in its MVP (Minimum Viable Product) stage—meaning it has only the essential features needed to be useful. There is still a lot of room for improvement.
-
-If you have suggestions or would like to contribute, feel free to reach out!
 
 ### Development
 
