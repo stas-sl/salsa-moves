@@ -45,6 +45,7 @@ A key parameter in this system is temperature, which ranges from 0 to 1:
 - At 1, selection is nearly random, mixing hard and easy moves equally.
 - At 0, it focuses almost exclusively on the hardest moves.
 - A practical setting is 0.8, which ensures a balanced mix—favoring harder moves but occasionally including easier ones for reinforcement.
+
 When starting a practice session, you can filter moves by state (e.g., "Learning" or "Review").
 
 #### Ways to Practice
