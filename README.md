@@ -1,5 +1,7 @@
 https://stas-sl.github.io/salsa-moves
 
+[![Site deploy](https://github.com/stas-sl/salsa-moves/actions/workflows/nuxtjs.yml/badge.svg)](https://github.com/stas-sl/salsa-moves/actions/workflows/nuxtjs.yml)
+
 ## Overview
 
 This app was primarily developed for my own use to catalog, remember, and practice salsa moves (linear On2/On1). It was inspired by Anki flashcards, which are primarily used for language learning but can be applied to any subject, from medical exams to music theory.
