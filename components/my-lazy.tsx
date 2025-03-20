@@ -6,10 +6,10 @@ import { makeTagProps } from 'vuetify/lib/composables/tag'
 import { makeTransitionProps, MaybeTransition } from 'vuetify/lib/composables/transition'
 
 // Directives
-import intersect from 'vuetify/lib/directives/intersect'
+import intersect from 'vuetify/lib/directives/intersect/index.mjs'
 
 // Utilities
-import { genericComponent, propsFactory, useRender } from 'vuetify/lib/util'
+import { genericComponent, propsFactory, useRender } from 'vuetify/lib/util/index.mjs'
 
 // Types
 import type { PropType } from 'vue'
