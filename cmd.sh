@@ -44,11 +44,12 @@ ffmpeg -y -i raw/1.mp4 -vf "scale='if(gt(a,1),720,-2)':'if(gt(a,1),-2,720)'" -r 
 
 python -c "import os; [os.rename(f, f\"s{int(f.split('.')[0][:-1] if not f.split('.')[0][-1].isdigit() else f.split('.')[0]):03}{f.split('.')[0][-1] if not f.split('.')[0][-1].isdigit() else ''}.{f.split('.')[-1]}\") for f in os.listdir() if os.path.isfile(f) and len(f) < 10]"
 
-python3 -c "import sys; import os; import json; print(json.dumps([{'name': f} for f in sorted(os.listdir(sys.argv[1]))], indent=2))" ~/Downloads/moves/encoded > ~/Projects/salsa-moves/static/files.json
+python3 -c "import sys; import os; import json; print(json.dumps([{'name': f} for f in sorted(os.listdir(sys.argv[1]))], indent=2))" ~/Projects/salsa-moves/media/moves/ > ~/Projects/salsa-moves/static/files.json
 
 
 for file in raw/*; do ffmpeg -y -i "$file"  -vf "scale='if(gt(a,1),720,-2)':'if(gt(a,1),-2,720)'" -r 30 -c:v libvpx-vp9 -crf 41 -b:v 0 -c:a libopus -b:a 128k -row-mt 1 "webm/$(basename "${file%.*}.webm")"; done
 
+# last
 for file in raw/*; do ffmpeg -y -i "$file"  -vf "scale='if(gt(a,1),720,-2)':'if(gt(a,1),-2,720)'" -r 30 -c:v libx265 -g 15 -tag:v hvc1 -crf 25 -preset slow "encoded/$(basename "${file%.*}.mp4")"; done
 
 rsync -av --delete -e "ssh -p 2222" ~/Downloads/moves/encoded/* root@curious.by:/var/www/salsa-moves/media/moves/
