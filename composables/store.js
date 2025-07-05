@@ -41,7 +41,7 @@ export const useStore = () => {
         {
           'states': ['learning', 'review'],
           'method': 'thompson',
-          'thompsonTemperature': 0.2
+          'thompsonTemperature': 0.9
         })
     }
     const defaults = {

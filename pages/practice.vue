@@ -21,8 +21,8 @@ const selectRandomMove = () => {
       let a = movesState.value[`move-${m.move}`].alpha
       let b = movesState.value[`move-${m.move}`].beta
       const t = userSettings.value.practiceOptions.thompsonTemperature
-      a = (1 - t) + t * a
-      b = (1 - t) + t * b
+      a = t + (1 - t) * a
+      b = t + (1 - t) * b
       const p = randomBeta(a, b)()
       if (p < minP) {
         minP = p
